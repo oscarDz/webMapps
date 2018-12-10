@@ -1,0 +1,17 @@
+{
+  "name": "mygeocode",
+  "version": "1.0.0",
+  "description": "obtiene coordenadas de Google goecoder y conexion con mongodb",
+  "main": "mongoConnect.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "oscarDiaz",
+  "license": "ISC",
+  "dependencies": {
+    "body-parser": "^1.18.3",
+    "express": "^4.16.3",
+    "express-async-handler": "^1.1.4",
+    "mongojs": "^2.6.0"
+  }
+}

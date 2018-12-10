@@ -1,0 +1,59 @@
+<html ng-app="myApp">
+<head>
+	<meta charset="UTF-8">
+	<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.7.4/angular.min.js"></script>
+	<link rel="stylesheet" href="css/bootstrap/bootstrap.min.css">
+	<link rel="stylesheet" href="css/estilo.css">
+	<script src="js/js-xlsx-master/dist/jszip.js"></script>	
+	<script src="js/js-xlsx-master/dist/shim.min.js"></script>
+	<script src="js/js-xlsx-master/dist/xlsx.min.js"></script>
+	<script src="js/js-bootstrap/bootstrap.min.js"></script>
+  	
+	<script src="js/leer.js" "></script>
+	<title>
+		Prueba archivo
+	</title>
+</head>
+<body ng-controller='MyController'>
+	
+		<nav class="navbar navbar-expand-lg fixed-top"><h1>Mappass</h1></nav>
+		<div><h3 class="text-muted center contents-under">Los archivos con extención.xsl tardan menos que el archivo .xlsx</h3></div>
+		<div class="container " >
+
+		<div class="input-group mb-3">
+    		<div class="custom-file">
+    			<input type="file" class="custom-file-input" id="file" accept=".xls,.xlsx" 
+    			aria-describedby="inputGroupFileAddon04" onchange="angular.element(this).scope().fileName()" >
+    			<label class="custom-file-label" for="file" aria-describedby="file" >{{Anombre}}</label>
+  			</div>
+  			<div class="input-group-append">
+    			<button  class="btn btn-outline-secondary" type="button" id="inputGroupFileAddon04" ng-click="subir()">subir</button>
+  			</div>
+		</div>
+			<table id="myTable" class="table">
+				<thead>
+					<tr>
+						<th>Nombre Corto</th>
+						<th>Nombre Largo</th>
+						<th>Dirección</th>
+						<th>Coordenadas</th>
+						<th>Responsable</th>
+						<th>Cargo</th>
+
+					</tr>
+				</thead>
+				<tbody ng-repeat="lugar in lugares">
+					<tr >
+						<td>{{ lugar.NOM_CORTO_PRESTATARIO }}</td>
+						<td>{{ lugar.NOM_LARGO_PRESTATARIO }}</td>
+						<td>{{ lugar.CALLE+" Num. "+lugar.NUM_EXT+", int."+lugar.NUM_INT+", Col. "+lugar.NOM_COLONIA+", C.P."+lugar.CP+", Del. "+lugar.NOM_MUNICIPIO+", Estado "+lugar.NOM_EDO }}</td>
+						<td>{{ "lat: " +lugar.COORDENADAS.lat+ ", lng: "+ lugar.COORDENADAS.lng+", Tipo: "+lugar.COORDENADAS.tipo }}</td>
+						<td>{{ lugar.NOM_TRATAMIENTO_RESPONSABLE+" "+lugar.APATERNO_RESPONSABLE+" "+lugar.AMATERNO_RESPONSABLE+" "+lugar.NOMBRE_RESPONSABLE }}</td>
+						<td>{{ lugar.CARGO_RESPONSABLE }}</td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+	</div>
+</body>
+</html>

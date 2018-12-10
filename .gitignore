@@ -34,6 +34,9 @@ build/Release
 
 # Dependency directories
 node_modules/
+public/css/bootstrap
+public/js/js-bootstrap
+public/js/js-xlsx-master
 jspm_packages/
 
 # TypeScript v1 declaration files

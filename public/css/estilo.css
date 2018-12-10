@@ -1,0 +1,24 @@
+nav{
+	background-color:#843742; 
+	color:#ffffff;
+	text-align: center;
+}
+h3{
+	text-align: center;
+}
+
+thead{
+	background-color:#560C16;
+	color: #ffffff;
+}
+
+.btn-outline-secondary:hover {
+  color: #fff;
+  background-color: #CD8791;
+  border-color: #6c757d;
+}
+
+.contents-under {
+  padding-top: 70px;
+}
+
