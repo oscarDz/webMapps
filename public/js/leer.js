@@ -1,6 +1,7 @@
 var app = angular.module('myApp',[]);
 app.controller('MyController',function($scope,$http){
 		$scope.Anombre = 'Elegir un archivo';
+		$scope.buscaLugar = "";
 		console.log($scope.lugares);
 
 		$scope.isObjectEmpty = function(card){
@@ -32,7 +33,7 @@ app.controller('MyController',function($scope,$http){
 						  +$scope.lugares[i].CP+", "
 						  +$scope.lugares[i].NOM_EDO;
 
-					$http.get("api/coord/"+location.replace(/\//gi,""))
+					$http.post("api/coord/",JSON.stringify(location))
 					.then(function(response) {
 						if (response.data.status==1) {
 							$scope.lugares[i].COORDENADAS.lat = response.data.lat;
@@ -95,6 +96,15 @@ app.controller('MyController',function($scope,$http){
 		
 			$scope.leer();
 			
+		}
+		$scope.buscar = function(){
+			var nombre = $scope.buscaLugar
+			var busqueda = {"nombre" : nombre.toUpperCase()}
+			 $http.post("/api/buscaLugares", JSON.stringify(busqueda)
+			  	).then(function(response) {
+			    console.log("respuesta ",response);
+	
+			  });
 		}
 });
 

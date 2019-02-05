@@ -1,22 +1,41 @@
 var express = require('express');
+//origenes desconocidos
 var cors = require('cors');
-//var axios = require('axios');
+/*
+* configuracion de api de google
+*/
 const googleMapsClient = require('@google/maps').createClient({
   key: 'AIzaSyBzCG2KiGWaMgOWkP4X9uuh8cQaBfceYkM',
   Promise: Promise
 });
 var app = express();
+//configurar driver mongoDB
 var mongojs = require('mongojs');
+//BD , Colleccion
 var db = mongojs('servicio', ['lugares']);
+//limite en MB de json request
 var bodyParser = require('body-parser');
 app.use(bodyParser.json({limit: '50mb'}));
 app.use(bodyParser.urlencoded({limit: '50mb', extended: true}));
 var router = express.Router();
 
+
+const rateLimit = require("express-rate-limit");
+app.enable("trust proxy"); // only if you're behind a reverse proxy (Heroku, Bluemix, AWS ELB, Nginx, etc)
+const apiLimiter = rateLimit({
+  windowMs: 15 * 60 * 1000, // 15 minutes
+  max: 50000
+});
+ 
+// only apply to requests that begin with /api/
+app.use("/api/", apiLimiter);
+
+//contenido estatico
 app.use(express.static(__dirname + '/public'));
 app.use(bodyParser.json());
 app.use(cors());
 
+//inserta los lugares que se obtuvieron del excel
 app.post('/api/lugares', function (req, res) {
   db.lugares.insert(req.body,function(err, doc) {
     console.log("insertado",doc);
@@ -30,20 +49,31 @@ app.post('/api/lugares', function (req, res) {
   });
 });
 
-app.get('/api/lugares', function (req, res) {
-  console.log('I received a GET request');
-
+//busca todo en la DB
+app.post('/api/lugaresApp', function (req, res) {
   db.lugares.find(function (err, docs) {
     console.log(docs);
     res.json(docs);
   });
 });
 
-app.get('/api/coord/:location', function (req, res) {
+//busqueda por exprecion regular
+app.post('/api/buscaLugares', function (req, res) {
+ 
+ var rgx = req.body.nombre
+ console.log(rgx);
+  db.lugares.find({"NOM_LARGO_PRESTATARIO" : {$regex :  new RegExp(rgx)}},function (err, docs) {
+    console.log(docs);
+    res.json(docs);
+  });
+});
+
+//obtiene coordenadas
+app.post('/api/coord/', function (req, res) {
   
   console.time("consulta");
   //console.log(req.params.location);
-  var location = req.params.location;
+  var location = req.body.location;
   var resp = "";
   //var location= ["centenario 119, CP 03660, Benito Juares, cmdx"];
   googleMapsClient.geocode({address: location})
