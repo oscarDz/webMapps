@@ -36,7 +36,7 @@
 		    		<div class="input-group-prepend">
     					<span class="input-group-text" id="txtNombre">Busqueda por nombre</span>
  					</div>
-  						<input type="text" class="form-control text-uppercase" ng-model="buscaLugar" placeholder="Nombre" aria-label="Nombre" aria-describedby="txtNombre" ng-keyup="buscar()">
+  						<input type="text" class="form-control text-uppercase" ng-model="buscaLugar" placeholder="Nombre" aria-label="Nombre largo" aria-describedby="txtNombre" ng-keyup="buscar()">
 		  			<div class="input-group-append">
 		    			<button  class="btn btn-outline-secondary" type="button" id="btnBuscar" ng-click="buscar()">Buscar</button>
 		  			</div>
@@ -55,7 +55,7 @@
 
 					</tr>
 				</thead>
-				<tbody ng-repeat="lugar in lugares">
+				<tbody ng-repeat="lugar in lugares track by $index" >
 					<tr >
 						<td>{{ lugar.NOM_CORTO_PRESTATARIO }}</td>
 						<td>{{ lugar.NOM_LARGO_PRESTATARIO }}</td>
