@@ -8,6 +8,7 @@
 	<script src="js/js-xlsx-master/dist/shim.min.js"></script>
 	<script src="js/js-xlsx-master/dist/xlsx.min.js"></script>
 	<script src="js/js-bootstrap/bootstrap.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-bootstrap/2.5.0/ui-bootstrap-tpls.min.js"></script>
   	
 	<script src="js/leer.js" "></script>
 	<title>
@@ -36,7 +37,7 @@
 		    		<div class="input-group-prepend">
     					<span class="input-group-text" id="txtNombre">Busqueda por nombre</span>
  					</div>
-  						<input type="text" class="form-control text-uppercase" ng-model="buscaLugar" placeholder="Nombre" aria-label="Nombre largo" aria-describedby="txtNombre" ng-keyup="buscar()">
+  						<input type="text" class="form-control text-uppercase" ng-model="buscaLugar" placeholder="Nombre largo" aria-label="Nombre largo" aria-describedby="txtNombre" ng-keyup="buscar()">
 		  			<div class="input-group-append">
 		    			<button  class="btn btn-outline-secondary" type="button" id="btnBuscar" ng-click="buscar()">Buscar</button>
 		  			</div>
@@ -55,14 +56,16 @@
 
 					</tr>
 				</thead>
-				<tbody ng-repeat="lugar in lugares track by $index" >
-					<tr >
-						<td>{{ lugar.NOM_CORTO_PRESTATARIO }}</td>
-						<td>{{ lugar.NOM_LARGO_PRESTATARIO }}</td>
-						<td>{{ lugar.CALLE+" Num. "+lugar.NUM_EXT+", int."+lugar.NUM_INT+", Col. "+lugar.NOM_COLONIA+", C.P."+lugar.CP+", Del. "+lugar.NOM_MUNICIPIO+", Estado "+lugar.NOM_EDO }}</td>
-						<td>{{ "lat: " +lugar.COORDENADAS.lat+ ", lng: "+ lugar.COORDENADAS.lng+", Tipo: "+lugar.COORDENADAS.tipo }}</td>
-						<td>{{ lugar.NOM_TRATAMIENTO_RESPONSABLE+" "+lugar.APATERNO_RESPONSABLE+" "+lugar.AMATERNO_RESPONSABLE+" "+lugar.NOMBRE_RESPONSABLE }}</td>
-						<td>{{ lugar.CARGO_RESPONSABLE }}</td>
+				<tbody ng-repeat="lugar in lugares track by $index" ng-click="showModal(lugar)">
+					<tr id="tabla">
+						<div >
+							<td>{{ lugar.NOM_CORTO_PRESTATARIO }}</td>
+							<td>{{ lugar.NOM_LARGO_PRESTATARIO }}</td>
+							<td>{{ lugar.CALLE+" Num. "+lugar.NUM_EXT+", int."+lugar.NUM_INT+", Col. "+lugar.NOM_COLONIA+", C.P."+lugar.CP+", Del. "+lugar.NOM_MUNICIPIO+", Estado "+lugar.NOM_EDO }}</td>
+							<td>{{ "lat: " +lugar.COORDENADAS.lat+ ", lng: "+ lugar.COORDENADAS.lng+", Tipo: "+lugar.COORDENADAS.tipo }}</td>
+							<td>{{ lugar.NOM_TRATAMIENTO_RESPONSABLE+" "+lugar.APATERNO_RESPONSABLE+" "+lugar.AMATERNO_RESPONSABLE+" "+lugar.NOMBRE_RESPONSABLE }}</td>
+							<td>{{ lugar.CARGO_RESPONSABLE }}</td>
+						</div>
 					</tr>
 				</tbody>
 			</table>

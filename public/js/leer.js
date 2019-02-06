@@ -1,5 +1,6 @@
-var app = angular.module('myApp',[]);
-app.controller('MyController',function($scope,$http){
+var app = angular.module('myApp',['ui.bootstrap']);
+app.controller('MyController',function($scope,$http,$uibModal){
+	 'use strict';
 		$scope.Anombre = 'Elegir un archivo';
 		$scope.buscaLugar = "";
 		console.log($scope.lugares);
@@ -129,6 +130,27 @@ app.controller('MyController',function($scope,$http){
 			    $scope.lugares = rowObject;
 			  });
 		}
+
+
+		$scope.showModal =function(e){
+			$uibModal.open({
+			      templateUrl: "modal/modModificar.html",
+			      controller: function ($scope, $uibModalInstance) {
+			        $scope.ok = function () {
+			          $uibModalInstance.close();
+			        };
+			      
+			        $scope.cancel = function () {
+			          $uibModalInstance.dismiss('cancel');
+			        };
+			      }
+			    }).result.catch(function(res) {
+					  if (!(res === 'cancel' || res === 'escape key press')) {
+					    throw res;
+					  }
+					});
+		};
+
 });
 
 
