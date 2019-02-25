@@ -3,7 +3,6 @@ app.controller('MyController',function($scope,$http,$uibModal){
 	 'use strict';
 		$scope.Anombre = 'Elegir un archivo';
 		$scope.buscaLugar = "";
-		console.log($scope.lugares);
 
 		$scope.isObjectEmpty = function(card){
  		  return Object.keys(card).length === 0;
@@ -13,33 +12,37 @@ app.controller('MyController',function($scope,$http,$uibModal){
 			  console.log($scope.lugares);
 			  $http.post('/api/lugares', $scope.lugares
 			  	).then(function(response) {
-			    console.log("insercion ",response);
-			    if (response.status==1) {
-			    	alert("Se realizaron "+response.total+"inserciones");
+			    console.log(response);
+			    if (response.status === 200) {
+			    	if (response.data.status===1) {
+			    		alert("Se realizaron "+response.data.total+" inserciones");
+				    }else{
+				    	alert("Error al insertar "+response.data.error);
+				    }
 			    }else{
-			    	alert("Error al insertar"+response.error);
+			    	alert("Error al insertar error al consumir servicio");
 			    }
+			    
 			  });
 			};
 
 
 		$scope.getCoords = function(){
+			var x = $scope.lugares.length
 			//var location = "centenario 119, CP 03660, Benito Juares, cmdx";
-			var t0 = performance.now();
 			for (var i = 0; i < $scope.lugares.length; i++) {
 				(function(i){
-					var location = $scope.lugares[i].CALLE+" "
+					var location = {"location" : $scope.lugares[i].CALLE+" "
 						  +$scope.lugares[i].NUM_EXT+", "
 						  +$scope.lugares[i].NOM_COLONIA+", "
 						  +$scope.lugares[i].CP+", "
-						  +$scope.lugares[i].NOM_EDO;
-
-					$http.post("api/coord/",JSON.stringify(location))
+						  +$scope.lugares[i].NOM_EDO};
+					$http.post("api/coord",JSON.stringify(location))
 					.then(function(response) {
-						if (response.data.status==1) {
+						if (response.data.status===1) {
 							$scope.lugares[i].COORDENADAS.lat = response.data.lat;
 							$scope.lugares[i].COORDENADAS.lng = response.data.lng;
-							$scope.lugares[i].COORDENADAS.tipo = response.data.tipo;	
+							$scope.lugares[i].COORDENADAS.tipo = response.data.tipo;
 						}
 		      		}).catch(function(error) {
 		      			console.log("error ",error );
@@ -50,9 +53,6 @@ app.controller('MyController',function($scope,$http,$uibModal){
 				})(i);
 				
 			}
-
-				var t1 = performance.now();
-			console.log("Call to doSomething took " + (t1 - t0) + " milliseconds.")
 		}
 
 		$scope.leer = function(){	
@@ -88,9 +88,8 @@ app.controller('MyController',function($scope,$http,$uibModal){
 		    	var startIndex = (myFile.indexOf('\\') >= 0 ? myFile.lastIndexOf('\\') : myFile.lastIndexOf('/'));
 		    	var filename = myFile.substring(startIndex);
 		    	if (filename.indexOf('\\') === 0 || filename.indexOf('/') === 0) {
-		        	nombre = filename.substring(1);
+		        	$scope.Anombre = filename.substring(1);
 		    	}
-		    	$scope.Anombre = nombre;
 		    	//console.log($scope.Anombre)
 			}
 
