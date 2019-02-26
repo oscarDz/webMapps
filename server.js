@@ -82,7 +82,7 @@ app.post('/api/lugaresApp', function (req, res) {
   });
 });
 
-//busqueda por Nombre largo
+//busqueda por Nombre largo y rgx
 app.post('/api/buscaLugares', function (req, res) {
  
  var rgx = req.body.nombre
@@ -95,10 +95,24 @@ app.post('/api/buscaLugares', function (req, res) {
 
 //tipo de busqueda
 app.post('/api/typesearch', function (req, res) {
- 
- var rgx = req.body.nombre
+
+ var tipo = req.body.tipoB;
+ var rgx = req.body.dato;
+ var campo;
+
+ switch(tipo){
+  case "MA":
+  campo = "DIRECCION.NOM_MUNICIPIO";
+  break;
+  case "PA":
+  campo = "PROGRAMA_ACADEMICO";
+  break;
+ }
+
+ var query = {};
+ query[campo] = rgx;
  console.log(rgx);
-  db.lugares.find({"NOM_LARGO_PRESTATARIO" : {$regex :  new RegExp(rgx)}},function (err, docs) {
+  db.lugares.find(query,function (err, docs) {
     console.log(docs);
     res.json(docs);
   });

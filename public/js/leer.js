@@ -150,6 +150,15 @@ app.controller('MyController',function($scope,$http,$uibModal){
 					});
 		};
 
+		$scope.tipo = function(){
+			var busqueda = {"tipoB" : "MA",
+							"dato" : "BENITO JUAREZ"}
+			 $http.post("/api/typesearch", JSON.stringify(busqueda)
+			  	).then(function(response) {
+			    console.log("respuesta ",response);
+			  });
+		}
+
 });
 
 
