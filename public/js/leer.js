@@ -110,21 +110,21 @@ app.controller('MyController',function($scope,$http,$uibModal){
       				for (var i = 0; i < response.data.length; i++) {
 			    	 rowObject[i] = {"NOM_CORTO_PRESTATARIO":response.data[i].NOM_CORTO_PRESTATARIO,
 			    	 "NOM_LARGO_PRESTATARIO":response.data[i].NOM_LARGO_PRESTATARIO,
-			    	 "CALLE":response.data[i].CALLE,
-			    	 "NUM_EXT":response.data[i].NUM_EXT,
-			    	 "NUM_INT":response.data[i].NUM_INT,
-			    	 "NOM_COLONIA":response.data[i].NOM_COLONIA,
-			    	 "CP":response.data[i].CP,
-			    	 "NOM_MUNICIPIO":response.data[i].NOM_MUNICIPIO,
-			    	 "NOM_EDO":response.data[i].NOM_EDO,
-			    	 "COORDENADAS":{"lat":response.data[i].COORDENADAS.lat,
-			    	                "lng":response.data[i].COORDENADAS.lng,
-			    	                "tipo":response.data[i].COORDENADAS.tipo},
+			    	 "CALLE":response.data[i].DIRECCION.CALLE,
+			    	 "NUM_EXT":response.data[i].DIRECCION.NUM_EXT,
+			    	 "NUM_INT":response.data[i].DIRECCION.NUM_INT,
+			    	 "NOM_COLONIA":response.data[i].DIRECCION.NOM_COLONIA,
+			    	 "CP":response.data[i].DIRECCION.CP,
+			    	 "NOM_MUNICIPIO":response.data[i].DIRECCION.NOM_MUNICIPIO,
+			    	 "NOM_EDO":response.data[i].DIRECCION.NOM_EDO,
+			    	 "COORDENADAS":{"lat":response.data[i].DIRECCION.COORDENADAS.lat,
+			    	                "lng":response.data[i].DIRECCION.COORDENADAS.lng,
+			    	                "tipo":response.data[i].DIRECCION.COORDENADAS.tipo},
 			    	 "NOM_TRATAMIENTO_RESPONSABLE":response.data[i].NOM_TRATAMIENTO_RESPONSABLE,
-			    	 "APATERNO_RESPONSABLE":response.data[i].APATERNO_RESPONSABLE,
-			    	 "AMATERNO_RESPONSABLE":response.data[i].AMATERNO_RESPONSABLE,
-			    	 "NOMBRE_RESPONSABLE":response.data[i].NOMBRE_RESPONSABLE,
-			    	 "CARGO_RESPONSABLE":response.data[i].CARGO_RESPONSABLE}
+			    	 "APATERNO_RESPONSABLE":response.data[i].RESPONSABLE.APATERNO_RESPONSABLE,
+			    	 "AMATERNO_RESPONSABLE":response.data[i].RESPONSABLE.AMATERNO_RESPONSABLE,
+			    	 "NOMBRE_RESPONSABLE":response.data[i].RESPONSABLE.NOMBRE_RESPONSABLE,
+			    	 "CARGO_RESPONSABLE":response.data[i].RESPONSABLE.CARGO_RESPONSABLE}
 			    }
 			    $scope.lugares = rowObject;
 			  });
